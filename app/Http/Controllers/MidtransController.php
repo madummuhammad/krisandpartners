@@ -63,8 +63,7 @@ class MidtransController extends Controller
     public function get_status()
     {
         $serverKey = env('SERVER_KEY_SANDBOX');
-        $id = request('order_payment_id');
-        $payment_number=OrderPayment::where('id',$id)->first()->midtrans_order_id;
+        $payment_number='d050c077-f5e9-40f6-94fb-5c341a3de569';
         if(env('APP_ENV')=='development'){
             $api_url = 'https://api.sandbox.midtrans.com/v2/'.$payment_number.'/status';
         } else {
@@ -81,7 +80,7 @@ class MidtransController extends Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $response = curl_exec($ch);
 
-        $decode=json_decode($response);
+        return $decode=json_decode($response);
 
         var_dump($decode);
 

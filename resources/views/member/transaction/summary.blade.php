@@ -55,9 +55,9 @@
 					</form>
 					@else
 					@if(env('APP_ENV')=='development')
-					<as href="https://app.sandbox.midtrans.com/snap/v2/vtweb/{{$competition->payment->midtrans_order_id}}" class="btn-success btn text-white mt-4">Konfirmasi Pembayaran</a>
+					<a href="https://app.sandbox.midtrans.com/snap/v2/vtweb/{{$competition->payment->midtrans_order_id}}" class="btn-success btn text-white mt-4">Konfirmasi Pembayaran</a>
 					@else
-					<as href="https://app.midtrans.com/snap/v2/vtweb/{{$competition->payment->midtrans_order_id}}" class="btn-success btn text-white mt-4">Konfirmasi Pembayaran</a>
+					<a href="https://app.midtrans.com/snap/v2/vtweb/{{$competition->payment->midtrans_order_id}}" class="btn-success btn text-white mt-4">Konfirmasi Pembayaran</a>
 					@endif
 					@endif
 				</div>
