@@ -1,0 +1,88 @@
+<?php
+
+namespace App\Http\Controllers;
+use App\Models\Competition;
+use App\Models\Member;
+use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EmailVerification;
+use Auth;
+
+use Illuminate\Http\Request;
+
+class WebController extends Controller
+{
+    public function RegisterForm()
+    {
+        $currentDateTime = Carbon::now();
+        $competition=Competition::where('to', '>=', $currentDateTime)
+        ->latest()
+        ->first();
+        return view('web.home',['competition'=>$competition]);
+    }
+
+    public function LoginForm()
+    {
+        $currentDateTime = Carbon::now();
+        $competition=Competition::where('to', '>=', $currentDateTime)
+        ->latest()
+        ->first();
+        return view('web.login',['competition'=>$competition]);
+    }
+
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'username' => 'required|unique:members',
+            'email' => 'required|email|unique:members',
+            'phone' => 'required',
+            'password' => 'required|min:6',
+        ]);
+
+
+        $member = new Member();
+        $member->name = $request->input('name');
+        $member->certificate_name=$request->input('name');
+        $member->username = $request->input('username');
+        $member->email = $request->input('email');
+        $member->phone = $request->input('phone');
+        $member->token=sha1($request->input('email'));
+        $member->password = Hash::make($request->input('password'));
+
+        $member->save();
+        Mail::to($member->email)->send(new EmailVerification($member));
+        return redirect('email/verify')->with('email', $member->email);
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'username' => ['required'],
+            'password' => ['required'],
+        ]);
+
+        if (Auth::guard('member')->attempt($credentials)) {
+            if (Auth::guard('member')->user()->hasVerifiedEmail()) {
+                return redirect()->intended('/');
+            } else {
+                return redirect('/login')->with('error', 'Your email is not verified.');
+            }
+        } else {
+            return redirect('/login')->with('error', 'Invalid username or password.');
+        }
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::guard('member')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('login'); 
+    }
+
+}
