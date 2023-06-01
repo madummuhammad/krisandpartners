@@ -8,7 +8,11 @@
       </a>
     </div>
     <div class="ugf-content-block">
+      @if($competition)
       <img style="width: 100%; height: 100%;object-fit: cover; object-position: center;" src="{{ asset('storage/' . $competition->banner) }}" alt="">
+      @else
+      <img style="width: 100%; height: 100%;object-fit: cover; object-position: center;" src="" alt="">
+      @endif
       <div class="content-block">
       </div>
     </div>
@@ -41,29 +45,29 @@
               @if(session('error'))
               <div class="alert alert-warning" role="alert">
                {{session('error')}}
+             </div>
+             @endif
+             <form action="{{ route('login') }}" method="POST" class="job-application-form">
+              @csrf
+              <div class="form-group">
+                <input type="text" class="form-control" id="input-username" name="username" required>
+                <label for="input-username">Username</label>
               </div>
-              @endif
-              <form action="{{ route('login') }}" method="POST" class="job-application-form">
-                @csrf
-                <div class="form-group">
-                  <input type="text" class="form-control" id="input-username" name="username" required>
-                  <label for="input-username">Username</label>
+              <div class="form-group">
+                <input type="password" class="form-control" id="input-password" name="password" required>
+                <label for="input-password">Password</label>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <button type="submit" class="btn">Login</button>
+                <div class="py-3">
+                  <p class="text-dark">Belum punya akun? <a href="{{url('register')}}" class="text-primary fw-bold">Register</a></p>
                 </div>
-                <div class="form-group">
-                  <input type="password" class="form-control" id="input-password" name="password" required>
-                  <label for="input-password">Password</label>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <button type="submit" class="btn">Login</button>
-                  <div class="py-3">
-                    <p class="text-dark">Belum punya akun? <a href="{{url('register')}}" class="text-primary fw-bold">Register</a></p>
-                  </div>
-                </div>
-              </form>
-            </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
-    @endsection
+  </div>
+  @endsection
 

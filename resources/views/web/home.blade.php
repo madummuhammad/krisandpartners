@@ -8,7 +8,11 @@
       </a>
     </div>
     <div class="ugf-content-block">
+      @if($competition)
       <img style="width: 100%; height: 100%;object-fit: cover; object-position: center;" src="{{ asset('storage/' . $competition->banner) }}" alt="">
+      @else
+      <img style="width: 100%; height: 100%;object-fit: cover; object-position: center;" src="" alt="">
+      @endif
       <div class="content-block">
       </div>
     </div>
