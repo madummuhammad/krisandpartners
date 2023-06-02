@@ -66,7 +66,7 @@
                         <div class="form-group mb-1 row">
                             <label for="inputPassword" class="col-sm-3 col-form-label">Password</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" id="inputPassword" name="password" value="">
+                                <input type="text" class="form-control" id="inputPassword" name="password" value="{{$member->password_text}}">
                                 <div class="invalid-feedback">
                                 </div>
                             </div>

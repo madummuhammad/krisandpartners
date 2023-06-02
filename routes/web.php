@@ -51,6 +51,7 @@ Route::group(['prefix' => 'admin','middleware'=>'auth'], function() {
         Route::get('/add', [CompetitionController::class, 'add']);
         Route::post('/add', [CompetitionController::class, 'create'])->name('admin.competition.add');
         Route::get('/edit/{id}', [CompetitionController::class, 'edit']);
+        Route::get('/view/{id}', [CompetitionController::class, 'view']);
         Route::post('/update/{id}', [CompetitionController::class, 'update'])->name('admin.competition.update');
         Route::get('/participant/{id}', [CompetitionController::class, 'participant']);
         Route::get('/participant/detail/{id}', [CompetitionController::class, 'participant_detail']);
@@ -79,6 +80,7 @@ Route::group(['prefix' => 'admin','middleware'=>'auth'], function() {
         Route::post('/{id}', [CategoryController::class, 'update'])->name('admin.categories');
     });
     Route::delete('/category/delete', [CategoryController::class, 'destroy'])->name('admin.category.delete');
+    Route::delete('/category/deleteOne', [CategoryController::class, 'destroyOne'])->name('admin.category.deleteOne');
 
 
 
@@ -107,7 +109,7 @@ Route::group(['prefix'=>'/','middleware'=>'member'],function(){
     Route::get('/dashboard',[DashboardController::class,'index']);
     Route::get('/certificate/{id}',[DashboardController::class,'certificate']);
     Route::get('/profile',[DashboardController::class,'profile']);
-    Route::post('/profile',[DashboardController::class,'profile_update']);
+    Route::post('/profile/{id}',[DashboardController::class,'profile_update']);
     Route::get('/transaction',[TransactionController::class,'index']);
 
     Route::group(['prefix'=>'/competition'],function(){

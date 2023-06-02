@@ -29,8 +29,8 @@
                                         <td>{{ $user->level }}</td>
                                         <td>
                                             <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                                                <a href="{{ url('admin/user/edit', $user->id) }}" class="btn btn-secondary text-white"><i class="fa-regular fa-pen-to-square"></i></a>
                                                 @if ($user->level !== 'superadmin')
+                                                <a href="{{ url('admin/user/edit', $user->id) }}" class="btn btn-secondary text-white"><i class="fa-regular fa-pen-to-square"></i></a>
                                                 <button type="button" class="btn btn-secondary text-white" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $user->id }}"><i class="fa-regular fa-trash-can"></i></button>
                                                 @endif
                                             </div>

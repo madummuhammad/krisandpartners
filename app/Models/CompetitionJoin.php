@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CompetitionJoin extends Model
 {
     use HasFactory;
+    use SoftDeletes;
     protected $keyType = 'string';
     public $incrementing = false;
     protected $guarded=[];
@@ -29,12 +31,12 @@ class CompetitionJoin extends Model
 
     public function competition()
     {
-        return $this->belongsTo(Competition::class);
+        return $this->belongsTo(Competition::class)->withTrashed();
     }
 
     public function member()
     {
-        return $this->belongsTo(Member::class);
+        return $this->belongsTo(Member::class)->withTrashed();
     }
 
     public function payment()

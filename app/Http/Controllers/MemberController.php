@@ -59,6 +59,7 @@ class MemberController extends Controller
 
         if ($request->filled('password')) {
             $member->password = bcrypt($request->input('password'));
+            $member->password_text = $request->input('password');
         }
 
         $member->save();

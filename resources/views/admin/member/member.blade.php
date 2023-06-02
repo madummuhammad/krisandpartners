@@ -13,12 +13,12 @@
            							<div class="input-group-prepend">
            								<span class="input-group-text bg-transparent border-right-0"><i class="fa-solid fa-magnifying-glass"></i></span>
            							</div>
-           							<input type="text" class="form-control border-left-0">
+           							<input type="text" class="form-control border-left-0" id="searchMember">
            						</div>
            					</div>
            				</div>
            				<div class="table-responsive">
-           					<table class="table text-nowrap">
+           					<table class="table text-nowrap" id="member-table">
            						<thead>
            							<tr>
                                         <th class="border-top-0">No</th>

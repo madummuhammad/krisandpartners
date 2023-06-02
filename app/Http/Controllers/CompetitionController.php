@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Certificate;
+use App\Models\Member;
 use App\Models\Competition;
 use App\Models\CompetitionJoin;
 use App\Models\CompetitionCategory;
@@ -37,9 +38,18 @@ class CompetitionController extends Controller
         return view('admin.competition.edit', compact('competition','categories'));
     }
 
+    public function view($id)
+    {
+        $categories=Category::all();
+        $competition = Competition::with('categories')->findOrFail($id);
+        return view('admin.competition.view', compact('competition','categories'));
+    }
+
     public function participant($id)
     {
         $data['participant']=CompetitionJoin::where('competition_id',$id)->where('status','paid')->with('competition_join_category.categories','member','competition_join_category.certificate')->get();
+        $data['category']=Category::get();
+        $data['member']=Member::get();
         return view('admin.competition.participant',$data);
     }
 

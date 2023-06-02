@@ -16,6 +16,7 @@
     <link href="{{asset('assets/admin')}}/css/style.css" rel="stylesheet">
     <link href="{{asset('assets/admin')}}/css/style.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css">
 </head>
 
 <body>
@@ -93,6 +94,7 @@
 <script src="{{asset('assets/admin')}}/js/waves.js"></script>
 <script src="{{asset('assets/admin')}}/js/sidebarmenu.js"></script>
 <script src="{{asset('assets/admin')}}/js/custom.js"></script>
+<script src="{{asset('assets/admin')}}/js/filtering.js"></script>
 <script src="{{asset('assets/admin')}}/plugins/bower_components/chartist/dist/chartist.min.js"></script>
 <script src="{{asset('assets/admin')}}/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
 <script src="{{asset('assets/admin')}}/js/pages/dashboards/dashboard1.js"></script>
@@ -149,6 +151,7 @@
 
 </script>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 </body>
 
 </html>

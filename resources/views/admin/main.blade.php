@@ -16,6 +16,7 @@
     <link href="{{asset('assets/admin')}}/css/style.css" rel="stylesheet">
     <link href="{{asset('assets/admin')}}/css/style.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css">
 </head>
 
 <body>
@@ -107,6 +108,7 @@
 <script src="{{asset('assets/admin')}}/js/waves.js"></script>
 <script src="{{asset('assets/admin')}}/js/sidebarmenu.js"></script>
 <script src="{{asset('assets/admin')}}/js/custom.js"></script>
+<script src="{{asset('assets/admin')}}/js/filtering.js"></script>
 <script src="{{asset('assets/admin')}}/plugins/bower_components/chartist/dist/chartist.min.js"></script>
 <script src="{{asset('assets/admin')}}/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
 <script src="{{asset('assets/admin')}}/js/pages/dashboards/dashboard1.js"></script>
@@ -123,7 +125,7 @@
             $(".preloader").removeAttr('style');
             var reader = new FileReader();
             reader.onload = function(e) {
-            $(".preloader").css('display','none');
+                $(".preloader").css('display','none');
                 document.querySelector("#banner_image").src = e.target.result;
             };
             reader.readAsDataURL(this.files[0]);
@@ -132,39 +134,40 @@
 </script>
 <script>
     $(document).ready(function() {
-    // Klik pada checkbox "Pilih Semua"
-    $('#selectAll').click(function() {
-        if ($(this).is(':checked')) {
-            $('.category-checkbox').prop('checked', true);
+        $('#selectAll').click(function() {
+            if ($(this).is(':checked')) {
+                $('.category-checkbox').prop('checked', true);
 
-            var all_price=$('.all-prices-category').val();
-            $('.prices-category').val(all_price);
-        } else {
-            $('.category-checkbox').prop('checked', false);
-        }
-    });
+                var all_price=$('.all-prices-category').val();
+                $('.prices-category').val(all_price);
+            } else {
+                $('.category-checkbox').prop('checked', false);
+            }
+        });
 
-    // Klik pada tombol "Hapus Terpilih"
-    $('#btnDelete').click(function(e) {
-        // Pastikan setidaknya satu checkbox kategori tercentang
-        if ($('.category-checkbox:checked').length === 0) {
-            e.preventDefault(); // Mencegah pengiriman formulir jika tidak ada checkbox tercentang
-            // alert('Pilih setidaknya satu kategori untuk dihapus.');
-        }
-    });
 
-    $('.input-daterange-datepicker').daterangepicker({
-        buttonClasses: ['btn', 'btn-sm'],
-        applyClass: 'btn-danger',
-        cancelClass: 'btn-inverse',
-        locale: {
-            format: 'D/MM/YYYY'
-        }
+        $('#btnDelete').click(function(e) {
+            if ($('.category-checkbox:checked').length === 0) {
+                e.preventDefault();
+            }
+        });
+
+        $('.input-daterange-datepicker').daterangepicker({
+            buttonClasses: ['btn', 'btn-sm'],
+            applyClass: 'btn-danger',
+            cancelClass: 'btn-inverse',
+            locale: {
+                format: 'D/MM/YYYY'
+            }
+        });
     });
-});
 
 </script>
+<script>
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 </body>
 
 </html>

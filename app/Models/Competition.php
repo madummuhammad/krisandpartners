@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use App\Models\Category;
 use App\Models\CompetitionJoin;
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Competition extends Model
 {
+    use SoftDeletes;
     public $incrementing = true;
     public $timestamps = true;
     public $guarded = [];
@@ -16,6 +18,7 @@ class Competition extends Model
     {
         return $this->belongsToMany(Category::class, 'competition_categories', 'competition_id', 'category_id')
         ->withPivot('price')
+        ->withTrashed()
         ->withTimestamps();
     }
 

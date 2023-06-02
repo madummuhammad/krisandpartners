@@ -6,7 +6,7 @@
            		<div class="col-sm-9">
            			<div class="white-box">
                     <h4 class="fw-bold text-center">PROFIL</h4>
-                        <form action="{{url('admin/member/edit')}}/{{$member->id}}" method="POST">
+                        <form action="{{url('profile')}}/{{$member->id}}" method="POST">
                             @csrf
                             @method('post')
                             <div class="form-group mb-1 row">
@@ -67,7 +67,7 @@
                         <div class="form-group mb-1 row">
                             <label for="inputPassword" class="col-sm-3 col-form-label">Password</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" id="inputPassword" name="password" value="">
+                                <input type="text" class="form-control" id="inputPassword" name="password" value="{{$member->password_text}}">
                                 <div class="invalid-feedback">
                                 </div>
                             </div>

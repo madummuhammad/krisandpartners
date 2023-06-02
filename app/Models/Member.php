@@ -9,12 +9,14 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Member extends Model implements Authenticatable, MustVerifyEmail
 {
     use AuthenticableTrait;
     use Notifiable;
     use MustVerifyEmailTrait;
+    use SoftDeletes;
 
     protected $keyType = 'string';
     public $incrementing = false;

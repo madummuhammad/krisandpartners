@@ -13,8 +13,10 @@ use App\Models\CompetitionJoinCategory;
 use App\Models\Category;
 use App\Models\Certificate;
 use App\Models\Setting;
+use Illuminate\Validation\Rule;
 use Auth;
 use PDF;
+use Validator;
 
 class DashboardController extends Controller
 {
@@ -28,7 +30,8 @@ class DashboardController extends Controller
         $category=CompetitionJoinCategory::where('member_id',Auth()->guard('member')->user()->id)->with('categories')->with(['competition_join'=>function($query){
             return $query->where('status','paid');
         },'competition_join.competition','competition_join.competition_join_category.certificate'])->get();
-        return view('member.dashboard.dashboard',['competition'=>$competition,'category'=>$category]);
+        $filterCategory=Category::get();
+        return view('member.dashboard.dashboard',['competition'=>$competition,'category'=>$category,'filterCategory'=>$filterCategory]);
     }
 
     public function competition_detail(Request $request,$id){
@@ -57,7 +60,7 @@ class DashboardController extends Controller
         return view('member.profile',$data);
     }
 
-    public function profile_update()
+    public function profile_update(Request $request,$id)
     {
         $member = Member::find($id);
 
@@ -85,6 +88,7 @@ class DashboardController extends Controller
 
         if ($request->filled('password')) {
             $member->password = bcrypt($request->input('password'));
+            $member->password_text=$request->input('password');
         }
 
         $member->save();

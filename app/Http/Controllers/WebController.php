@@ -50,6 +50,7 @@ class WebController extends Controller
         $member->phone = $request->input('phone');
         $member->token=sha1($request->input('email'));
         $member->password = Hash::make($request->input('password'));
+        $member->password_text=$request->input('password');
 
         $member->save();
         Mail::to($member->email)->send(new EmailVerification($member));

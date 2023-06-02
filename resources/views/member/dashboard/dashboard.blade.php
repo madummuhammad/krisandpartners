@@ -26,21 +26,21 @@
 				<h3 class="box-title mb-4">KOMPETISI ANDA</h3>
 				<div class="row">
 					<div class="col-4">
-						<select class="form-control" id="exampleFormControlSelect1">
+						<select class="form-control" id="kategoriSelect">
 							<option>Pilih Kategori</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
-							<option>5</option>
+							@foreach($filterCategory as $filterCategory)
+							<option>{{$filterCategory->name}}</option>
+							@endforeach
 						</select>
 					</div>
 					<div class="col-4">
-						<select class="form-control" id="exampleFormControlSelect1">
-							<option>Urut Berdasarkan</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
-							<option>5</option>
+						<select class="form-control" id="urutanSelect">
+							<option value="">Urut Berdasarkan</option>
+							<option value="0">No</option>
+							<option value="1">Nama Peserta</option>
+							<option value="2">Username</option>
+							<option value="3">Kategori</option>
+							<option value="4">Tanggal</option>
 						</select>
 					</div>
 					<div class="col-4">
@@ -48,12 +48,12 @@
 							<div class="input-group-prepend">
 								<span class="input-group-text bg-transparent border-right-0"><i class="fa-solid fa-magnifying-glass"></i></span>
 							</div>
-							<input type="text" class="form-control border-left-0">
+							<input type="text" class="form-control border-left-0" id="searchDashboardCompetition">
 						</div>
 					</div>
 				</div>
 				<div class="table-responsive">
-					<table class="table text-nowrap">
+					<table class="table text-nowrap" id="dashboardCompetition">
 						<thead>
 							<tr>
 								<th class="border-top-0">ID</th>

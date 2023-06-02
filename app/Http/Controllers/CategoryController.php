@@ -43,4 +43,17 @@ class CategoryController extends Controller
 
         return redirect('admin/settings')->with('success', 'Kategori berhasil dihapus');
     }
+
+    public function destroyOne(Request $request)
+    {
+        $categoryIds = $request->input('categories');
+
+        if (empty($categoryIds)) {
+            return redirect('admin/settings')->with('error', 'Tidak ada kategori yang dipilih');
+        }
+
+        Category::where('id', $categoryIds)->delete();
+
+        return redirect('admin/settings')->with('success', 'Kategori berhasil dihapus');
+    }
 }

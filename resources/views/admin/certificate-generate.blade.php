@@ -9,39 +9,12 @@
 				<form action="" method="POST">
 					@csrf
 					@method('post')
-					<div class="form-group mb-1 row">
-						<label for="waktu_aktif" class="col-sm-3 col-form-label py-0">No. Sertifikat</label>
-						<div class="col-sm-5">
-							<div class="d-flex align-items-center">
-								<div class="pe-2">:</div>
-								<input class="form-control py-0">
-							</div>
-						</div>
-					</div>
-					<div class="form-group mb-1 row">
-						<label for="waktu_aktif" class="col-sm-3 col-form-label py-0">Nama Kompetisi</label>
-						<div class="col-sm-5">
-							<div class="d-flex align-items-center">
-								<div class="pe-2">:</div>
-								<input class="form-control py-0">
-							</div>
-						</div>
-					</div>
-					<div class="form-group mb-1 row">
+					<div class="form-group mb-3 row">
 						<label for="waktu_aktif" class="col-sm-3 col-form-label py-0">Nama Sertifikat</label>
 						<div class="col-sm-5">
 							<div class="d-flex align-items-center">
 								<div class="pe-2">:</div>
 								<input class="form-control py-0" name="name">
-							</div>
-						</div>
-					</div>
-					<div class="form-group mb-5 row">
-						<label for="waktu_aktif" class="col-sm-3 col-form-label py-0">Tanggal Menang</label>
-						<div class="col-sm-5">
-							<div class="d-flex align-items-center">
-								<div class="pe-2">:</div>
-								<input class="form-control py-0">
 							</div>
 						</div>
 					</div>

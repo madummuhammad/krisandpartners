@@ -8,11 +8,13 @@ use Illuminate\Auth\Authenticatable as AuthenticableTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Model implements Authenticatable
 {
     use AuthenticableTrait;
     use Notifiable;
+    use SoftDeletes;
 
     protected $keyType = 'string';
     public $incrementing = false;

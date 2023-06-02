@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use App\Models\Category;
 use App\Models\Certificate;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CompetitionJoinCategory extends Model
 {
     use HasFactory;
+    use SoftDeletes;
     protected $keyType = 'string';
     public $incrementing = false;
     protected $guarded=[];
@@ -26,7 +28,7 @@ class CompetitionJoinCategory extends Model
 
     public function categories()
     {
-        return $this->belongsTo(Category::class,'category_id');
+        return $this->belongsTo(Category::class,'category_id')->withTrashed();
     }
 
     public function competition_join()
@@ -36,7 +38,7 @@ class CompetitionJoinCategory extends Model
 
     public function member()
     {
-        return $this->belongsTo(Member::class);
+        return $this->belongsTo(Member::class)->withTrashed();
     }
 
     public function certificate()

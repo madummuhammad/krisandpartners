@@ -49,7 +49,7 @@ $currentDateTime = Carbon::now();
                                 </td>
                                 <td>
                                     <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                                        <a href="" class="btn btn-secondary text-white"><i class="fa-regular fa-eye"></i></a>
+                                        <a href="{{ url('admin/competition/view/'.$competition->id) }}" class="btn btn-secondary text-white"><i class="fa-regular fa-eye"></i></a>
                                         <a href="{{ url('admin/competition/edit/'.$competition->id) }}" class="btn btn-secondary text-white"><i class="fa-regular fa-pen-to-square"></i></a>
                                         <a href="{{ url('admin/competition/participant/'.$competition->id) }}" class="btn btn-secondary text-white"><i class="fa-regular fa-user"></i></a>
                                         <button type="button" class="btn btn-secondary text-white" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $competition->id }}"><i class="fa-regular fa-trash-can"></i></button>
