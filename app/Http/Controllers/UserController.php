@@ -22,8 +22,12 @@ class UserController extends Controller
 
     public function auth(Request $request)
     {
+        $credentials = $request->validate([
+            'username' => ['required'],
+            'password' => ['required'],
+            'captcha' => 'required|captcha',
+        ],['captcha.required'=>'Captcha harus diisi','captcha.captcha'=>'Captcha salah']);
         $credentials = $request->only('username', 'password');
-
         if (Auth::attempt($credentials)) {
             return redirect()->intended('/admin');
         }

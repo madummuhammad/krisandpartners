@@ -29,6 +29,7 @@ Route::post('/register', [WebController::class, 'register'])->name('register');
 Route::get('/login',[WebController::class,'LoginForm']);
 Route::post('/login', [WebController::class, 'login'])->name('login');
 Route::post('/logout', [WebController::class, 'logout'])->name('logout');
+Route::get('/reload-captcha', [WebController::class, 'reloadCaptcha']);
 
 Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify');
 Route::get('/email/verify',[EmailVerificationController::class,'notify']);

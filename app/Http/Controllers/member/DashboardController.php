@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Competition;
+use App\Models\Notification;
 use App\Models\Member;
 use App\Models\CompetitionJoin;
 use App\Models\CompetitionCategory;
@@ -27,11 +28,13 @@ class DashboardController extends Controller
         ->latest()
         ->first();
 
+        $notification=Notification::where('member_id',Auth::guard('member')->user()->id)->get();
+
         $category=CompetitionJoinCategory::where('member_id',Auth()->guard('member')->user()->id)->with('categories')->with(['competition_join'=>function($query){
             return $query->where('status','paid');
         },'competition_join.competition','competition_join.competition_join_category.certificate'])->get();
         $filterCategory=Category::get();
-        return view('member.dashboard.dashboard',['competition'=>$competition,'category'=>$category,'filterCategory'=>$filterCategory]);
+        return view('member.dashboard.dashboard',['competition'=>$competition,'category'=>$category,'filterCategory'=>$filterCategory,'notification'=>$notification]);
     }
 
     public function competition_detail(Request $request,$id){
@@ -45,7 +48,7 @@ class DashboardController extends Controller
         $data['certificate']=Certificate::where('id',$id)->first();
         $pdf = PDF::loadView('member.competition.certificate', $data)->setPaper('a4', 'landscape');
 
-        return $pdf->stream('certificate.pdf');
+        return $pdf->download('certificate.pdf');
     }
 
     public function joinForm($id)

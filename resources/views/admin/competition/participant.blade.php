@@ -3,7 +3,7 @@
            @section('content')
            <style>
              .bg-gold{
-                background-color: #ffd700;
+                background-color: #ffd700 !important;
              }
           </style>
           <div class="container-fluid">

@@ -6,12 +6,12 @@
 		<div class="col-sm-9">
 			<div class="white-box">
 				<!-- <h3 class="box-title mb-4">KOMPETISI ANDA</h3> -->
-				<div class="form-group mb-0 row">
+<!-- 				<div class="form-group mb-0 row">
 					<label for="waktu_aktif" class="col-sm-3 col-form-label py-0">No. Sertifikat</label>
 					<div class="col-sm-5">
 						<div class="form-control py-0 border-0">: {{$certificate->no_certificate}}</div>
 					</div>
-				</div>
+				</div> -->
 				<div class="form-group mb-0 row">
 					<label for="waktu_aktif" class="col-sm-3 col-form-label py-0">Nama Kompetisi</label>
 					<div class="col-sm-5">

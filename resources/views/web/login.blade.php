@@ -50,12 +50,41 @@
              <form action="{{ route('login') }}" method="POST" class="job-application-form">
               @csrf
               <div class="form-group">
-                <input type="text" class="form-control" id="input-username" name="username" required>
+                <input type="text" class="form-control @error('username') is-invalid @enderror" id="input-username" name="username" required>
                 <label for="input-username">Username</label>
+                @error('username')
+                <div class="invalid-feedback">
+                  {{$message}}
+                </div>
+                @enderror
               </div>
               <div class="form-group">
-                <input type="password" class="form-control" id="input-password" name="password" required>
+                <input type="password" class="form-control  @error('password') is-invalid @enderror" id="input-password" name="password" required>
                 <label for="input-password">Password</label>
+                @error('password')
+                <div class="invalid-feedback">
+                  {{$message}}
+                </div>
+                @enderror
+              </div>
+              <div class="form-group row">
+                <div class="col-md-12 captcha">
+                  <div class="d-flex align-items-center">
+                    <div class="img">{!! captcha_img() !!}</div>
+                    <button style="width:40px;height: 40px;" type="button" class="btn btn-sm btn-danger ms-3" class="reload" id="reload">
+                      &#x21bb;
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <input type="text" id="captcha" class="form-control @error('captcha') is-invalid @enderror" name="captcha" required>
+                <label for="input-password">Masukan Captcha</label>
+                @error('captcha')
+                <div class="invalid-feedback">
+                  {{$message}}
+                </div>
+                @enderror
               </div>
               <div class="d-flex justify-content-between align-items-center">
                 <button type="submit" class="btn">Login</button>

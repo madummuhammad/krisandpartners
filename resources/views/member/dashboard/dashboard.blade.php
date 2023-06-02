@@ -1,8 +1,11 @@
 @extends('member.main')
 @section('title', 'Dashboard')
+@php
+use App\Models\Notification;
+@endphp
 <style>
 	.bg-gold{
-		background-color: #ffd700;
+		background-color: #ffd700 !important;
 	}
 </style>
 @section('content')
@@ -11,6 +14,14 @@
 		<div class="col-sm-12">
 			<div class="card">
 				<div class="card-body">
+					@foreach($notification as $notification)
+					<div class="alert alert-warning d-flex align-items-center fs-4" role="alert">
+						<i class="fa-regular fa-bell fs-6 text-dark me-3"></i> {{$notification->message}}
+					</div>
+					@php
+					Notification::where('competition_join_category_id',$notification->competition_join_category_id)->delete();
+					@endphp
+					@endforeach
 					@if($competition)
 					<a href="{{url('competition/join/')}}/{{$competition->id}}">
 						<img style="width: 100%; height: 400px;object-fit: cover; object-position: center;" src="{{ asset('storage/' . $competition->banner) }}" alt="">

@@ -22,6 +22,11 @@ class WebController extends Controller
         return view('web.home',['competition'=>$competition]);
     }
 
+    public function reloadCaptcha()
+    {
+        return response()->json(['captcha'=> captcha_img()]);
+    }
+
     public function LoginForm()
     {
         $currentDateTime = Carbon::now();
@@ -39,7 +44,8 @@ class WebController extends Controller
             'email' => 'required|email|unique:members',
             'phone' => 'required',
             'password' => 'required|min:6',
-        ]);
+            'captcha' => 'required|captcha',
+        ],['captcha.required'=>'Captcha harus diisi','captcha.captcha'=>'Captcha salah']);
 
 
         $member = new Member();
@@ -62,9 +68,15 @@ class WebController extends Controller
         $credentials = $request->validate([
             'username' => ['required'],
             'password' => ['required'],
-        ]);
+            'captcha' => 'required|captcha',
+        ],['captcha.required'=>'Captcha harus diisi','captcha.captcha'=>'Captcha salah']);
 
-        if (Auth::guard('member')->attempt($credentials)) {
+        $data=[
+            'username'=>$request->input('username'),
+            'password'=>$request->input('password'),
+        ];
+
+        if (Auth::guard('member')->attempt($data)) {
             if (Auth::guard('member')->user()->hasVerifiedEmail()) {
                 return redirect()->intended('/');
             } else {

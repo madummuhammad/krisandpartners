@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Certificate;
 use App\Models\Member;
 use App\Models\Competition;
+use App\Models\Notification;
 use App\Models\CompetitionJoin;
 use App\Models\CompetitionCategory;
 use App\Models\CompetitionJoinCategory;
@@ -61,10 +62,20 @@ class CompetitionController extends Controller
 
     public function participant_win(Request $request,$id)
     {
+        $competition_join_category=CompetitionJoinCategory::where('id',$id)->with('competition_join.competition','categories')->first();
+        $competition=$competition_join_category->competition_join->competition->title;
+        $category_name=$competition_join_category->categories->name;
+        $message='Selamat, Anda memenangkan '.$competition.', '.$category_name;
+        $notification=[
+            'member_id'=>$competition_join_category->member_id,
+            'message'=>$message,
+            'competition_join_category_id'=>$id,
+        ];
         $status=$request->input('status');
         $win_date=date('Y-m-d H:i:s');
         if(!$status==0){
             $win_date=NULL;
+            Notification::where('competition_join_category_id',$id)->delete();
             Certificate::where('competition_join_category_id',$id)->delete();
         }
         CompetitionJoinCategory::where('id',$id)->update(['win_status'=>!$status,'win_date'=>$win_date]);
@@ -74,6 +85,8 @@ class CompetitionController extends Controller
                 'no_certificate'=>1,
                 'name'=>CompetitionJoinCategory::where('id',$id)->with('member')->first()->member->certificate_name
             ]);
+
+            Notification::create($notification);
             return redirect('admin/competition/participant/certificate/'.$certificate->id);
         } else {
             return back();

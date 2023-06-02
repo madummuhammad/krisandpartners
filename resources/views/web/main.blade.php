@@ -27,7 +27,6 @@
     <link rel="apple-touch-icon" sizes="72x72" href="{{asset('assets/web')}}/images/icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="{{asset('assets/web')}}/images/icon-114x114.png">
 
-
   </head>
   <body>
 
@@ -51,7 +50,18 @@
   <script src="{{asset('assets/web')}}/js/jquery.min.js"></script>
   <script src="{{asset('assets/web')}}/js/popper.min.js"></script>
   <script src="{{asset('assets/web')}}/js/bootstrap.min.js"></script>
-
   <script src="{{asset('assets/web')}}/js/custom.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    $('#reload').click(function () {
+      $.ajax({
+        type: 'GET',
+        url: 'reload-captcha',
+        success: function (data) {
+          $(".captcha .img").html(data.captcha);
+        }
+      });
+    });
+  </script>
 </body>
 </html>

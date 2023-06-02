@@ -23,7 +23,7 @@
 			<div class="row justify-content-center">
 				<div class="col-lg-6 col-12">
 					<form method="POST" action="{{url('admin/login')}}">
-					@csrf		
+						@csrf		
 						<div class="card">
 							<div class="card-body">
 								<div class="d-flex justify-content-center flex-column align-items-center">
@@ -39,10 +39,28 @@
 										@enderror
 									</div>
 									<div class="mb-3">
-										<input type="password"  value="" class="form-control @error('username') is-invalid @enderror" placeholder="Password" name="password">
-										@error('username')
+										<input type="password"  value="" class="form-control @error('password') is-invalid @enderror" placeholder="Password" name="password">
+										@error('password')
 										<div class="invalid-feedback">
 											<span class="text-danger">{{ $message }}</span>
+										</div>
+										@enderror
+									</div>
+									<div class="form-group row">
+										<div class="col-md-12 captcha">
+											<div class="d-flex align-items-center">
+												<div class="img">{!! captcha_img() !!}</div>
+												<button style="width:40px;height: 40px;" type="button" class="btn btn-sm btn-primary ms-3 text-white" class="reload" id="reload">
+													&#x21bb;
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<input type="text" id="captcha" class="form-control w-25 @error('captcha') is-invalid @enderror" name="captcha" required placeholder="Captcha">
+										@error('captcha')
+										<div class="invalid-feedback">
+											{{$message}}
 										</div>
 										@enderror
 									</div>
@@ -70,6 +88,18 @@
 <script src="{{asset('assets/admin')}}/plugins/bower_components/chartist/dist/chartist.min.js"></script>
 <script src="{{asset('assets/admin')}}/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
 <script src="{{asset('assets/admin')}}/js/pages/dashboards/dashboard1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $('#reload').click(function () {
+      $.ajax({
+        type: 'GET',
+        url: '../reload-captcha',
+        success: function (data) {
+          $(".captcha .img").html(data.captcha);
+      }
+  });
+  });
+</script>
 </body>
 
 </html>
