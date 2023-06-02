@@ -45,23 +45,48 @@
               <form action="{{ route('register') }}" method="POST" class="job-application-form">
                 @csrf
                 <div class="form-group">
-                  <input type="text" class="form-control" id="input-name" name="name" required>
+                  <input type="text" class="form-control @error('name') is-invalid @enderror" id="input-name" value="{{old('name')}}" name="name" required>
+                  @error('name')
+                  <div class="invalid-feedback">
+                    {{$message}}
+                  </div>
+                  @enderror
                   <label for="input-name">Nama</label>
                 </div>
                 <div class="form-group">
-                  <input type="text" class="form-control" id="input-username" name="username" required>
+                  <input type="text" class="form-control @error('username') is-invalid @enderror" id="input-username" name="username" value="{{old('username')}}" required>
+                  @error('username')
+                  <div class="invalid-feedback">
+                    {{$message}}
+                  </div>
+                  @enderror
                   <label for="input-username">Username</label>
                 </div>
                 <div class="form-group">
-                  <input type="email" class="form-control" id="input-email" name="email" required>
+                  <input type="email" class="form-control @error('email') is-invalid @enderror" id="input-email" name="email" value="{{old('email')}}" required>
+                  @error('email')
+                  <div class="invalid-feedback">
+                    {{$message}}
+                  </div>
+                  @enderror
                   <label for="input-email">Email</label>
                 </div>
                 <div class="form-group">
-                  <input type="text" class="form-control" id="input-phone" name="phone" required>
+                  <input type="text" class="form-control @error('phone') is-invalid @enderror" id="input-phone" name="phone" value="{{old('phone')}}" required>
+                  @error('phone')
+                  <div class="invalid-feedback">
+                    {{$message}}
+                  </div>
+                  @enderror
                   <label for="input-phone">Phone</label>
                 </div>
                 <div class="form-group">
-                  <input type="password" class="form-control" id="input-password" name="password" required>
+                  <input type="password" class="form-control @error('password') is-invalid @enderror" id="input-password" name="password" value="{{old('password')}}" required>
+                  @error('password')
+                  <div class="invalid-feedback">
+                    {{$message}}
+                  </div>
+                  @enderror
                   <label for="input-password">Password</label>
                 </div>
                 <div class="d-flex justify-content-between align-items-center">

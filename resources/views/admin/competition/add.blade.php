@@ -13,7 +13,7 @@
                             <label for="judul" class="col-sm-3 col-form-label">Judul Kompetisi</label>
                             <div class="col-sm-5">
                                 <input type="text" class="form-control @error('title') is-invalid @enderror"
-                                    id="judul" name="title" value="{{ old('title') }}">
+                                    id="judul" name="title" value="{{ old('title') }}" required>
                                 @error('title')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -89,11 +89,13 @@
                                         </div>
                                     </div>
                                 @endforeach
-
+                                @if(session('category'))
+                                <p class="text-danger">{{session('category')}}</p>
+                                @endif
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="banner" class="col-sm-3 col-form-label">Banner <br>Min. 700 x 700px</label>
+                            <label for="banner" class="col-sm-3 col-form-label">Banner <br>Min. 700 x 1080</label>
                             <div class="col-sm-5">
                                 <div class="w-25">
                                     <label for="input_banner" style="cursor:pointer">

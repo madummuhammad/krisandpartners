@@ -120,8 +120,10 @@
             );
 
         $('#input_banner').change(function(e) {
+            $(".preloader").removeAttr('style');
             var reader = new FileReader();
             reader.onload = function(e) {
+            $(".preloader").css('display','none');
                 document.querySelector("#banner_image").src = e.target.result;
             };
             reader.readAsDataURL(this.files[0]);

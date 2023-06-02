@@ -8,5 +8,5 @@ Verifikasi Email
 @endcomponent
 
 Terima kasih,<br>
-{{ config('app.name') }}
+Kris and Partners
 @endcomponent

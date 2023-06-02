@@ -11,9 +11,13 @@
 		<div class="col-sm-12">
 			<div class="card">
 				<div class="card-body">
+					@if($competition)
 					<a href="{{url('competition/join/')}}/{{$competition->id}}">
 						<img style="width: 100%; height: 400px;object-fit: cover; object-position: center;" src="{{ asset('storage/' . $competition->banner) }}" alt="">
 					</a>
+					@else
+					<img style="width: 100%; height: 400px;object-fit: cover; object-position: center;" src="" alt="Tidak ada kompetisi">
+					@endif
 				</div>
 			</div>
 		</div>

@@ -87,19 +87,19 @@ class CompetitionController extends Controller
         $categories = $request->input('categories');
 
         if(!$categories){
-            return redirect('admin/competition/add')->withInput();
+            return redirect('admin/competition/add')->with('category','Pilih dan isi harga kategori dengan benar')->withInput();
         }
         $prices = $request->input('prices');
         foreach ($categories as $categoryId) {
             $index=explode('|',$categoryId)[0];
             if(!$prices[$index]){
-                return redirect('admin/competition/add')->withInput();
+                return redirect('admin/competition/add')->with('category','Pilih dan isi harga kategori dengan benar')->withInput();
             }
         }
         $validatedData = $request->validate([
             'title' => 'required',
             'range' => 'required',
-            'banner' => 'required|image|mimes:jpeg,png,jpg,gif|dimensions:max_width=700,max_height=700',
+            'banner' => 'required|image|mimes:jpeg,png,jpg,gif|dimensions:max_width=700,max_height=1080',
             'description' => 'required',
         ]);
         $explode = explode(' - ', $request->input('range'));
