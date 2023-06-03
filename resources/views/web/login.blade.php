@@ -33,7 +33,7 @@
                     <a class="nav-link fw-bold fs-4" href="{{url('term_condition')}}">TERMS & CONDITION</a>
                   </li>
                   <li class="nav-item px-4">
-              <a href="{{url('contact_us')}}" class="nav-link fw-bold fs-4" href="#">CONTACT US</a>
+                    <a href="{{url('contact_us')}}" class="nav-link fw-bold fs-4" href="#">CONTACT US</a>
                   </li>
                 </ul>
               </div>
@@ -67,25 +67,8 @@
                 </div>
                 @enderror
               </div>
-              <div class="form-group row">
-                <div class="col-md-12 captcha">
-                  <div class="d-flex align-items-center">
-                    <div class="img">{!! captcha_img() !!}</div>
-                    <button style="width:40px;height: 40px;" type="button" class="btn btn-sm btn-danger ms-3" class="reload" id="reload">
-                      &#x21bb;
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <input type="text" id="captcha" class="form-control @error('captcha') is-invalid @enderror" name="captcha" required>
-                <label for="input-password">Masukan Captcha</label>
-                @error('captcha')
-                <div class="invalid-feedback">
-                  {{$message}}
-                </div>
-                @enderror
-              </div>
+              {!! NoCaptcha::renderJs() !!}
+              {!! NoCaptcha::display() !!}
               <div class="d-flex justify-content-between align-items-center">
                 <button type="submit" class="btn">Login</button>
                 <div class="py-3">

@@ -11,6 +11,7 @@ use App\Models\Member;
 use App\Models\CompetitionJoin;
 use App\Models\CompetitionCategory;
 use App\Models\CompetitionJoinCategory;
+use App\Models\CompetitionJoinPayment;
 use App\Models\Category;
 use App\Models\Certificate;
 use App\Models\Setting;
@@ -28,6 +29,8 @@ class DashboardController extends Controller
         ->latest()
         ->first();
 
+        $this->checkPaymentUnpaid();
+        $this->checkPaymentPending();
         $notification=Notification::where('member_id',Auth::guard('member')->user()->id)->get();
 
         $category=CompetitionJoinCategory::where('member_id',Auth()->guard('member')->user()->id)->with('categories')->with(['competition_join'=>function($query){
@@ -35,6 +38,108 @@ class DashboardController extends Controller
         },'competition_join.competition','competition_join.competition_join_category.certificate'])->get();
         $filterCategory=Category::get();
         return view('member.dashboard.dashboard',['competition'=>$competition,'category'=>$category,'filterCategory'=>$filterCategory,'notification'=>$notification]);
+    }
+
+    function checkPaymentUnpaid()
+    {
+        $payment_unpaid=CompetitionJoinPayment::where('status','unpaid')->where('member_id',Auth::guard('member')->user()->id)->get();
+        foreach ($payment_unpaid as $key => $value) {
+            $serverKey = env('SERVER_KEY_SANDBOX');
+            $payment_number=$value->id;
+            if(env('APP_ENV')=='development'){
+                $api_url = 'https://api.sandbox.midtrans.com/v2/'.$payment_number.'/status';
+            } else {
+                $api_url = 'https://api.midtrans.com/v2/'.$payment_number.'/status';
+            }
+            $headers = array(
+                'Content-Type: application/json',
+                'Accept: application/json',
+                'Authorization: Basic '.base64_encode($serverKey)
+            );
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $api_url);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $response = curl_exec($ch);
+
+            $status=json_decode($response);
+
+            if($status->status_code==200)
+            {
+                if($status->transaction_status=='settlement' OR $status->transaction_status=='capture'){
+                    CompetitionJoinPayment::where('id',$value->id)->update(['status'=>'paid']);
+                    CompetitionJoin::where('id',$value->competition_join_id)->update(['status'=>'paid']);
+
+                    
+                }
+            }
+
+            if($status->status_code==404)
+            {
+                CompetitionJoinPayment::where('id',$value->id)->update(['status'=>'pending']);
+                CompetitionJoin::where('id',$value->competition_join_id)->update(['status'=>'pending']);
+            }
+
+            if($status->status_code==407)
+            {
+                CompetitionJoinPayment::where('id',$value->id)->update(['status'=>'failed']);
+                CompetitionJoin::where('id',$value->competition_join_id)->update(['status'=>'failed']);
+
+                
+            }
+        }
+    }
+
+    function checkPaymentPending()
+    {
+        $payment_pending=CompetitionJoinPayment::where('status','pending')->where('member_id',Auth::guard('member')->user()->id)->get();
+        foreach ($payment_pending as $key => $value) {
+            $serverKey = env('SERVER_KEY_SANDBOX');
+            $payment_number=$value->id;
+            if(env('APP_ENV')=='development'){
+                $api_url = 'https://api.sandbox.midtrans.com/v2/'.$payment_number.'/status';
+            } else {
+                $api_url = 'https://api.midtrans.com/v2/'.$payment_number.'/status';
+            }
+            $headers = array(
+                'Content-Type: application/json',
+                'Accept: application/json',
+                'Authorization: Basic '.base64_encode($serverKey)
+            );
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $api_url);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $response = curl_exec($ch);
+
+            $status=json_decode($response);
+
+            if($status->status_code==200)
+            {
+                if($status->transaction_status=='settlement' OR $status->transaction_status=='capture'){
+                    CompetitionJoinPayment::where('id',$value->id)->update(['status'=>'paid']);
+                    CompetitionJoin::where('id',$value->competition_join_id)->update(['status'=>'paid']);
+
+                    
+                }
+            }
+
+            if($status->status_code==404)
+            {
+                CompetitionJoinPayment::where('id',$value->id)->update(['status'=>'pending']);
+                CompetitionJoin::where('id',$value->competition_join_id)->update(['status'=>'pending']);
+
+                
+            }
+
+            if($status->status_code==407)
+            {
+                CompetitionJoinPayment::where('id',$value->id)->update(['status'=>'failed']);
+                CompetitionJoin::where('id',$value->competition_join_id)->update(['status'=>'failed']);
+
+                
+            }
+        }
     }
 
     public function competition_detail(Request $request,$id){
@@ -115,12 +220,12 @@ class DashboardController extends Controller
 
         $total=0;
         foreach ($request->input('categories') as $index => $category) {
-         $competition_category=CompetitionCategory::where('competition_id',$id)->where('category_id',explode('|', $category)[1])->first();
+           $competition_category=CompetitionCategory::where('competition_id',$id)->where('category_id',explode('|', $category)[1])->first();
 
-         $total=$total+$competition_category->price;
-     }
+           $total=$total+$competition_category->price;
+       }
 
-     $data=[
+       $data=[
         'competition_id'=>$id,
         'member_id'=>Auth::guard('member')->user()->id,
         'join_date'=>date('Y-m-d H:i:s'),
@@ -133,15 +238,15 @@ class DashboardController extends Controller
     $competition=CompetitionJoin::create($data);
 
     foreach ($request->input('categories') as $index => $category) {
-     $competition_category=CompetitionCategory::where('competition_id',$id)->where('category_id',explode('|', $category)[1])->first();
-     $competition_join_category=CompetitionJoinCategory::create([
+       $competition_category=CompetitionCategory::where('competition_id',$id)->where('category_id',explode('|', $category)[1])->first();
+       $competition_join_category=CompetitionJoinCategory::create([
         'competition_join_id'=>$competition->id,
         'member_id'=>Auth::guard('member')->user()->id,
         'category_id'=>explode('|', $category)[1],
         'price'=>$competition_category->price
     ]);
- }
+   }
 
- return redirect('competition/summary/'.$competition->id);
+   return redirect('competition/summary/'.$competition->id);
 }
 }

@@ -63,7 +63,7 @@ class MidtransController extends Controller
     public function get_status()
     {
         $serverKey = env('SERVER_KEY_SANDBOX');
-        $payment_number='d050c077-f5e9-40f6-94fb-5c341a3de569';
+        $payment_number='1a3fc1ad-9d94-4bb9-a719-4bbc6e68a0a4';
         if(env('APP_ENV')=='development'){
             $api_url = 'https://api.sandbox.midtrans.com/v2/'.$payment_number.'/status';
         } else {

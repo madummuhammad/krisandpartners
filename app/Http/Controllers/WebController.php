@@ -24,11 +24,6 @@ class WebController extends Controller
         return view('web.home',['competition'=>$competition]);
     }
 
-    public function reloadCaptcha()
-    {
-        return response()->json(['captcha'=> captcha_img()]);
-    }
-
     public function LoginForm()
     {
         $currentDateTime = Carbon::now();
@@ -76,8 +71,7 @@ class WebController extends Controller
             'email' => 'required|email|unique:members',
             'phone' => 'required',
             'password' => 'required|min:6',
-            'captcha' => 'required|captcha',
-        ],['captcha.required'=>'Captcha harus diisi','captcha.captcha'=>'Captcha salah']);
+        ]);
 
 
         $member = new Member();
@@ -101,7 +95,7 @@ class WebController extends Controller
             'username' => ['required'],
             'password' => ['required'],
             'captcha' => 'required|captcha',
-        ],['captcha.required'=>'Captcha harus diisi','captcha.captcha'=>'Captcha salah']);
+        ]);
 
         $data=[
             'username'=>$request->input('username'),

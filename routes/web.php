@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\WebController;
 use App\Http\Controllers\member\DashboardController;
+use App\Http\Controllers\MidtransController;
 use App\Http\Controllers\member\TransactionController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\EmailVerificationController;
@@ -24,6 +25,7 @@ use App\Http\Controllers\EmailVerificationController;
 */
 
 Route::get('/register',[WebController::class,'RegisterForm']);
+Route::get('/status',[MidtransController::class,'get_status']);
 Route::post('/register', [WebController::class, 'register'])->name('register');
 
 Route::get('/login',[WebController::class,'LoginForm']);
@@ -32,7 +34,6 @@ Route::get('/contact_us',[WebController::class,'contact_us']);
 Route::post('/contact_us',[WebController::class,'contact_us_send']);
 Route::post('/login', [WebController::class, 'login'])->name('login');
 Route::post('/logout', [WebController::class, 'logout'])->name('logout');
-Route::get('/reload-captcha', [WebController::class, 'reloadCaptcha']);
 
 Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify');
 Route::get('/email/verify',[EmailVerificationController::class,'notify']);

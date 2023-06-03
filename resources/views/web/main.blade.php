@@ -39,16 +39,6 @@
   <script src="{{asset('assets/web')}}/js/bootstrap.min.js"></script>
   <script src="{{asset('assets/web')}}/js/custom.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script type="text/javascript">
-    $('#reload').click(function () {
-      $.ajax({
-        type: 'GET',
-        url: 'reload-captcha',
-        success: function (data) {
-          $(".captcha .img").html(data.captcha);
-        }
-      });
-    });
-  </script>
+  <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
 </body>
 </html>

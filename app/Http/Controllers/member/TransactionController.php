@@ -20,12 +20,12 @@ class TransactionController extends Controller
 
     public function index()
     {
-     $data['transaction']=CompetitionJoin::where('member_id',Auth::guard('member')->user()->id)->with('competition')->get();
-     return view('member.transaction.transaction',$data);
- }
+       $data['transaction']=CompetitionJoin::where('member_id',Auth::guard('member')->user()->id)->with('competition')->get();
+       return view('member.transaction.transaction',$data);
+   }
 
- public function transaction($id)
- {
+   public function transaction($id)
+   {
     $competition=CompetitionJoin::with('member')->where('id',$id)->where('status','unpaid')->first();
 
     $payment=CompetitionJoinPayment::updateOrcreate(['competition_join_id'=>$id],[
@@ -33,16 +33,14 @@ class TransactionController extends Controller
         'competition_join_id'=>$id,
         'midtrans_order_id'=>NULL,
         'total'=>$competition->total,
-        'status'=>'unpaid'
+        'status'=>'pending'
     ]);
 
     $midtrans=New MidtransController();
     $url=$midtrans->create_url($payment->id,$competition->member->name,$competition->member->email,$competition->member->phone,$competition->total);
-
+    CompetitionJoin::with('member')->where('id',$id)->where('status','unpaid')->update(['status'=>'pending']);
     header("Location: " . $url);
     exit();
-
-        // return back();
 }
 
 }
