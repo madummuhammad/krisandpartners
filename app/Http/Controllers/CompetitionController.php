@@ -122,7 +122,7 @@ class CompetitionController extends Controller
         $validatedData = $request->validate([
             'title' => 'required',
             'range' => 'required',
-            'banner' => 'required|image|mimes:jpeg,png,jpg,gif|dimensions:max_width=700,max_height=1080',
+            'banner' => 'required|image|mimes:jpeg,png,jpg,gif|dimensions:max_width=810,max_height=1080',
             'description' => 'required',
         ]);
         $explode = explode(' - ', $request->input('range'));
@@ -172,7 +172,7 @@ class CompetitionController extends Controller
         $validatedData = $request->validate([
             'title' => 'required',
             'range' => 'required',
-            'banner' => 'image|mimes:jpeg,png,jpg,gif|dimensions:max_width=700,max_height=700',
+            'banner' => 'image|mimes:jpeg,png,jpg,gif|dimensions:max_width=810,max_height=1080',
             'description' => 'required',
         ]);
 
@@ -187,7 +187,7 @@ class CompetitionController extends Controller
 
         if ($request->hasFile('banner')) {
             $validatedData['banner'] = $request->validate([
-                'banner' => 'required|image|mimes:jpeg,png,jpg,gif|dimensions:max_width=700,max_height=700',
+                'banner' => 'required|image|mimes:jpeg,png,jpg,gif|dimensions:max_width=810,max_height=1080',
             ]);
             $bannerPath = $request->file('banner')->store('banners');
             $competition->banner = $bannerPath;

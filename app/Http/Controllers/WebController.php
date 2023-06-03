@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 use App\Models\Competition;
 use App\Models\Member;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EmailVerification;
 use Auth;
+use App\Mail\ContactUsEmail;
 
 use Illuminate\Http\Request;
 
@@ -34,6 +36,36 @@ class WebController extends Controller
         ->latest()
         ->first();
         return view('web.login',['competition'=>$competition]);
+    }
+
+    public function contact_us()
+    {
+        $currentDateTime = Carbon::now();
+        $competition=Competition::where('to', '>=', $currentDateTime)
+        ->latest()
+        ->first();
+        return view('web.contact_us',['competition'=>$competition]);
+    }
+
+    public function contact_us_send(Request $request)
+    {
+        $settings=Setting::first();
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'message' => 'required',
+        ]);
+
+        $data = [
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'message' => $request->input('message'),
+        ];
+
+        Mail::to($settings->email)->send(new ContactUsEmail());
+
+        session()->flash('success', 'Pesan anda berhasil dikirim');
+        return redirect()->back();
     }
 
     public function register(Request $request)
@@ -85,6 +117,12 @@ class WebController extends Controller
         } else {
             return redirect('/login')->with('error', 'Invalid username or password.');
         }
+    }
+
+    public function term_condition()
+    {
+        $data['term_condition']=Setting::first();
+        return view('web.term_condition',$data);
     }
 
     public function logout(Request $request)

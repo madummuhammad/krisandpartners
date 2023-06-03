@@ -80,7 +80,7 @@ class DashboardController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            return redirect('profile')->withErrors($validator)->withInput();
         }
 
         $member->name = $request->input('name');
@@ -96,7 +96,7 @@ class DashboardController extends Controller
 
         $member->save();
 
-        return back()->with('success', 'Data member berhasil diperbarui.');
+        return redirect('profile')->with('success', 'Data member berhasil diperbarui.');
     }
 
 

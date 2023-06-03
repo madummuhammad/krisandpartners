@@ -20,6 +20,13 @@ class SettingsController extends Controller
         return view('admin.settings.settings',compact('categories','settings'));
     }
 
+    public function term_condition()
+    {
+        $term_condition=request('term_condition');
+        Setting::where('deleted_at',NULL)->update(['term_condition'=>$term_condition]);
+        return back();
+    }
+
     public function update(Request $request)
     {
         $request->validate([

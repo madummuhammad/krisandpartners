@@ -1,6 +1,6 @@
 @extends('admin.main')
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
-@section('title', 'Edit Kompetisi')
+@section('title', 'Detail Kompetisi')
 
 @section('content')
 <div class="container-fluid">
@@ -48,7 +48,9 @@
             <div class="row">
                 <div class="col-6">
                     <div>
+                        @if($competition->categories->contains('id', $category->id))
                         - {{ $category->name }} (Rp. {{ $competition->categories->where('id', $category->id)->first()->pivot->price }})
+                        @endif
                     </div>
                 </div>
             </div>

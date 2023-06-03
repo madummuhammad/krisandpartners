@@ -33,7 +33,7 @@
                     <a class="nav-link fw-bold fs-4" href="{{url('term_condition')}}">TERMS & CONDITION</a>
                   </li>
                   <li class="nav-item px-4">
-              <a href="{{url('contact_us')}}" class="nav-link fw-bold fs-4" href="#">CONTACT US</a>
+                    <a href="{{url('contact_us')}}" class="nav-link fw-bold fs-4" href="#">CONTACT US</a>
                   </li>
                 </ul>
               </div>
@@ -41,57 +41,48 @@
           </nav>
           <div class="ufg-job-application-wrapper pt-5 mt-5">
             <div class="form-steps active">
-              <h3 class="text-center">Login</h3>
+              <h3 class="text-center">CONTACT US</h3>
               @if(session('error'))
               <div class="alert alert-warning" role="alert">
                {{session('error')}}
              </div>
              @endif
-             <form action="{{ route('login') }}" method="POST" class="job-application-form">
+             @if(session('success'))
+             <div class="alert alert-success" role="alert">
+              {{session('success')}}
+            </div>
+            @endif
+            <form action="{{ url('contact_us') }}" method="POST" class="job-application-form">
               @csrf
               <div class="form-group">
-                <input type="text" class="form-control @error('username') is-invalid @enderror" id="input-username" name="username" required>
-                <label for="input-username">Username</label>
-                @error('username')
+                <input type="text" class="form-control @error('name') is-invalid @enderror" id="input-name" name="name" required>
+                <label for="input-name">Nama</label>
+                @error('name')
                 <div class="invalid-feedback">
                   {{$message}}
                 </div>
                 @enderror
               </div>
               <div class="form-group">
-                <input type="password" class="form-control  @error('password') is-invalid @enderror" id="input-password" name="password" required>
-                <label for="input-password">Password</label>
-                @error('password')
+                <input type="email" class="form-control @error('email') is-invalid @enderror" id="input-email" name="email" required>
+                <label for="input-email">Email</label>
+                @error('email')
                 <div class="invalid-feedback">
                   {{$message}}
                 </div>
                 @enderror
-              </div>
-              <div class="form-group row">
-                <div class="col-md-12 captcha">
-                  <div class="d-flex align-items-center">
-                    <div class="img">{!! captcha_img() !!}</div>
-                    <button style="width:40px;height: 40px;" type="button" class="btn btn-sm btn-danger ms-3" class="reload" id="reload">
-                      &#x21bb;
-                    </button>
-                  </div>
-                </div>
               </div>
               <div class="form-group">
-                <input type="text" id="captcha" class="form-control @error('captcha') is-invalid @enderror" name="captcha" required>
-                <label for="input-password">Masukan Captcha</label>
-                @error('captcha')
+                <textarea type="text" class="form-control @error('message') is-invalid @enderror" id="input-message" name="message" required></textarea>
+                <label for="input-message">Pesan Anda</label>
+                @error('message')
                 <div class="invalid-feedback">
                   {{$message}}
                 </div>
                 @enderror
               </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <button type="submit" class="btn">Login</button>
-                <div class="py-3">
-                  <p class="text-dark">Belum punya akun? <a href="{{url('register')}}" class="text-primary fw-bold">Register</a></p>
-                </div>
-              </div>
+              <button type="submit" class="btn">KIRIM</button>
+
             </form>
           </div>
         </div>

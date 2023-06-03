@@ -137,13 +137,22 @@
         $('#selectAll').click(function() {
             if ($(this).is(':checked')) {
                 $('.category-checkbox').prop('checked', true);
-
                 var all_price=$('.all-prices-category').val();
                 $('.prices-category').val(all_price);
             } else {
                 $('.category-checkbox').prop('checked', false);
             }
+            $('.all-prices-category').on('keyup',function(){
+                var selectAll=$('#selectAll').is(':checked');
+                if(selectAll){
+                    var price=$(this).val();
+                    $('.prices-category').val(price);
+                }
+            })
         });
+
+        function create_all_price(price){
+        }
 
 
         $('#btnDelete').click(function(e) {

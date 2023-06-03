@@ -27,6 +27,9 @@ Route::get('/register',[WebController::class,'RegisterForm']);
 Route::post('/register', [WebController::class, 'register'])->name('register');
 
 Route::get('/login',[WebController::class,'LoginForm']);
+Route::get('/term_condition',[WebController::class,'term_condition']);
+Route::get('/contact_us',[WebController::class,'contact_us']);
+Route::post('/contact_us',[WebController::class,'contact_us_send']);
 Route::post('/login', [WebController::class, 'login'])->name('login');
 Route::post('/logout', [WebController::class, 'logout'])->name('logout');
 Route::get('/reload-captcha', [WebController::class, 'reloadCaptcha']);
@@ -68,6 +71,7 @@ Route::group(['prefix' => 'admin','middleware'=>'auth'], function() {
     Route::group(['prefix'=>'settings'],function(){
         Route::get('/',[SettingsController::class,'index']);
         Route::post('/',[SettingsController::class,'update']);
+        Route::post('/term_condition',[SettingsController::class,'term_condition']);
     });
 
     Route::group(['prefix'=>'certificate'],function(){

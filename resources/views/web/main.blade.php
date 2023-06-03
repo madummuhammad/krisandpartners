@@ -31,19 +31,6 @@
   <body>
 
     @yield('content');
-
-
-    <div class="footer">
-      <div class="social-links">
-        <a href="#"><i class="lab la-facebook-f"></i></a>
-        <a href="#"><i class="lab la-twitter"></i></a>
-        <a href="#"><i class="lab la-linkedin-in"></i></a>
-        <a href="#"><i class="lab la-instagram"></i></a>
-      </div>
-      <div class="copyright">
-        <p>Copyright © 2023 Anfra. All Rights Reserved</p>
-      </div>
-    </div>
   </div>
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->

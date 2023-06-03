@@ -95,7 +95,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="banner" class="col-sm-3 col-form-label">Banner <br>Min. 700 x 1080</label>
+                            <label for="banner" class="col-sm-3 col-form-label">Banner <br>Min. 810 x 1080</label>
                             <div class="col-sm-5">
                                 <div class="w-25">
                                     <label for="input_banner" style="cursor:pointer">

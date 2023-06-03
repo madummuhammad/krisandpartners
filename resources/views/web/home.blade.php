@@ -33,7 +33,7 @@
                     <a class="nav-link fw-bold fs-4" href="#">TERMS & CONDITION</a>
                   </li>
                   <li class="nav-item px-4">
-                    <a class="nav-link fw-bold fs-4" href="#">CONTACT US</a>
+                    <a href="{{url('contact_us')}}" class="nav-link fw-bold fs-4" href="#">CONTACT US</a>
                   </li>
                 </ul>
               </div>

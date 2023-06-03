@@ -1,5 +1,6 @@
 @extends('admin.main')
 @section('title','Settings')
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -107,6 +108,26 @@
                     </tbody>
                 </table>
             </div>
+        </form>
+    </div>
+</div>
+<div class="col-sm-9">
+    <div class="white-box">
+        <h3 class="box-title mb-4">TERM & CONDITION</h3>
+        <form action="{{url('admin/settings/term_condition')}}" method="POST">
+            @csrf
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <textarea class="form-control @error('description') is-invalid @enderror" id="summernote" name="term_condition"
+                    rows="10">{{$settings->term_condition}}</textarea> 
+                    @error('description')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+            </div>
+            <button class="btn btn-success text-white">Kirim Perubahan</button>
         </form>
     </div>
 </div>
