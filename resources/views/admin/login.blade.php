@@ -46,24 +46,8 @@
 										</div>
 										@enderror
 									</div>
-									<div class="form-group row">
-										<div class="col-md-12 captcha">
-											<div class="d-flex align-items-center">
-												<div class="img">{!! captcha_img() !!}</div>
-												<button style="width:40px;height: 40px;" type="button" class="btn btn-sm btn-primary ms-3 text-white" class="reload" id="reload">
-													&#x21bb;
-												</button>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<input type="text" id="captcha" class="form-control w-25 @error('captcha') is-invalid @enderror" name="captcha" required placeholder="Captcha">
-										@error('captcha')
-										<div class="invalid-feedback">
-											{{$message}}
-										</div>
-										@enderror
-									</div>
+									{!! NoCaptcha::renderJs() !!}
+									{!! NoCaptcha::display() !!}
 									<div class="d-flex justify-content-center">
 										<button class="btn btn-primary">Login</button>
 									</div>
@@ -89,17 +73,6 @@
 <script src="{{asset('assets/admin')}}/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
 <script src="{{asset('assets/admin')}}/js/pages/dashboards/dashboard1.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript">
-    $('#reload').click(function () {
-      $.ajax({
-        type: 'GET',
-        url: '../reload-captcha',
-        success: function (data) {
-          $(".captcha .img").html(data.captcha);
-      }
-  });
-  });
-</script>
 </body>
 
 </html>

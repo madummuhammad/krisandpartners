@@ -71,6 +71,7 @@ class WebController extends Controller
             'email' => 'required|email|unique:members',
             'phone' => 'required',
             'password' => 'required|min:6',
+            'g-recaptcha-response' => 'required|captcha'
         ]);
 
 
@@ -94,7 +95,7 @@ class WebController extends Controller
         $credentials = $request->validate([
             'username' => ['required'],
             'password' => ['required'],
-            'captcha' => 'required|captcha',
+            'g-recaptcha-response' => 'required|captcha'
         ]);
 
         $data=[
@@ -104,7 +105,7 @@ class WebController extends Controller
 
         if (Auth::guard('member')->attempt($data)) {
             if (Auth::guard('member')->user()->hasVerifiedEmail()) {
-                return redirect()->intended('/');
+                return redirect('/');
             } else {
                 return redirect('/login')->with('error', 'Your email is not verified.');
             }
